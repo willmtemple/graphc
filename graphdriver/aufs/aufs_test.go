@@ -11,7 +11,7 @@ import (
 	"path"
 	"testing"
 
-	"github.com/docker/libgraphdriver/graphdriver"
+	"github.com/willmtemple/graphc/graphdriver"
 	"github.com/docker/docker/pkg/archive"
 	"github.com/docker/docker/pkg/reexec"
 )

@@ -5,7 +5,7 @@ package vfs
 import (
 	"testing"
 
-	"github.com/docker/libgraphdriver/graphdriver/graphtest"
+	"github.com/willmtemple/graphc/graphdriver/graphtest"
 
 	"github.com/docker/docker/pkg/reexec"
 )

@@ -8,7 +8,7 @@ import (
 	"syscall"
 	"testing"
 
-	"github.com/docker/libgraphdriver/graphdriver"
+	"github.com/willmtemple/graphc/graphdriver"
 )
 
 var (

@@ -5,7 +5,7 @@ package devmapper
 import (
 	"testing"
 
-	"github.com/docker/libgraphdriver/graphdriver/graphtest"
+	"github.com/willmtemple/graphc/graphdriver/graphtest"
 )
 
 func init() {

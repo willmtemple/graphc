@@ -3,7 +3,7 @@
 package zfs
 
 import (
-	"github.com/docker/libgraphdriver/graphdriver/graphtest"
+	"github.com/willmtemple/graphc/graphdriver/graphtest"
 	"testing"
 )
 

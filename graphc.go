@@ -5,13 +5,13 @@ import (
 	"os"
 
 	"github.com/codegangsta/cli"
-	"github.com/docker/libgraphdriver/graphdriver"
+	"github.com/willmtemple/graphc/graphdriver"
 
-	_ "github.com/docker/libgraphdriver/graphdriver/aufs"
-	_ "github.com/docker/libgraphdriver/graphdriver/devmapper"
-	_ "github.com/docker/libgraphdriver/graphdriver/vfs"
-	_ "github.com/docker/libgraphdriver/graphdriver/overlay"
-	_ "github.com/docker/libgraphdriver/graphdriver/btrfs"
+	_ "github.com/willmtemple/graphc/graphdriver/aufs"
+	_ "github.com/willmtemple/graphc/graphdriver/devmapper"
+	_ "github.com/willmtemple/graphc/graphdriver/vfs"
+	_ "github.com/willmtemple/graphc/graphdriver/overlay"
+	_ "github.com/willmtemple/graphc/graphdriver/btrfs"
 )
 
 func initDriver(c *cli.Context) graphdriver.Driver {
@@ -62,7 +62,7 @@ func main() {
 
 	graphc := cli.NewApp()
 	graphc.Name = "graphc"
-	graphc.Usage = "manage libgraphdriver storage"
+	graphc.Usage = "manage graphc storage"
 	graphc.Flags = []cli.Flag {
 		cli.StringFlag{
 			Name:	"home",
