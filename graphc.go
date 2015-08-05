@@ -8,10 +8,12 @@ import (
 	"github.com/willmtemple/graphc/graphdriver"
 
 	_ "github.com/willmtemple/graphc/graphdriver/aufs"
-	_ "github.com/willmtemple/graphc/graphdriver/devmapper"
-	_ "github.com/willmtemple/graphc/graphdriver/vfs"
-	_ "github.com/willmtemple/graphc/graphdriver/overlay"
 	_ "github.com/willmtemple/graphc/graphdriver/btrfs"
+	_ "github.com/willmtemple/graphc/graphdriver/devmapper"
+	_ "github.com/willmtemple/graphc/graphdriver/overlay"
+	_ "github.com/willmtemple/graphc/graphdriver/vfs"
+	_ "github.com/willmtemple/graphc/graphdriver/windows"
+	_ "github.com/willmtemple/graphc/graphdriver/zfs"
 )
 
 func initDriver(c *cli.Context) graphdriver.Driver {
@@ -63,52 +65,51 @@ func main() {
 	graphc := cli.NewApp()
 	graphc.Name = "graphc"
 	graphc.Usage = "manage graphc storage"
-	graphc.Flags = []cli.Flag {
+	graphc.Flags = []cli.Flag{
 		cli.StringFlag{
-			Name:	"home",
-			Value:	"/var/lib/docker/",
-			Usage:	"home directory for graphdriver storage operations",
-			EnvVar:	"GRAPHDRIVER_HOME",
+			Name:   "home",
+			Value:  "/var/lib/docker/",
+			Usage:  "home directory for graphdriver storage operations",
+			EnvVar: "GRAPHDRIVER_HOME",
 		},
 		cli.StringFlag{
-			Name:	"driver, s",
-			Value:	"",
-			Usage:	"storage backend to use",
-			EnvVar:	"GRAPHDRIVER_BACKEND",
+			Name:   "driver, s",
+			Value:  "",
+			Usage:  "storage backend to use",
+			EnvVar: "GRAPHDRIVER_BACKEND",
 		},
 		cli.StringFlag{
-			Name:	"context, c",
-			Value:	"",
-			Usage:	"optional mountlabel (SELinux context)",
+			Name:  "context, c",
+			Value: "",
+			Usage: "optional mountlabel (SELinux context)",
 		},
-
 	}
 	graphc.EnableBashCompletion = true
 	graphc.Commands = []cli.Command{
 		{
-			Name:		"create",
-			Aliases:	[]string{"c"},
-			Usage:		"create a new storage for id",
-			Flags:		[]cli.Flag {
+			Name:    "create",
+			Aliases: []string{"c"},
+			Usage:   "create a new storage for id",
+			Flags: []cli.Flag{
 				cli.StringFlag{
-					Name:	"parent, p",
-					Value:	"",
-					Usage:	"an id of which the new image will initially be a copy",
+					Name:  "parent, p",
+					Value: "",
+					Usage: "an id of which the new image will initially be a copy",
 				},
 			},
-			Action:		create,
+			Action: create,
 		},
 		{
-			Name:		"get",
-			Aliases:	[]string{"g"},
-			Usage:		"mount an image to the filesystem",
-			Action:		get,
+			Name:    "get",
+			Aliases: []string{"g"},
+			Usage:   "mount an image to the filesystem",
+			Action:  get,
 		},
 		{
-			Name:		"put",
-			Aliases:	[]string{"p"},
-			Usage:		"unmount an image from the filesystem",
-			Action:		put,
+			Name:    "put",
+			Aliases: []string{"p"},
+			Usage:   "unmount an image from the filesystem",
+			Action:  put,
 		},
 	}
 
