@@ -7,13 +7,7 @@ import (
 	"github.com/codegangsta/cli"
 	"github.com/willmtemple/graphc/graphdriver"
 
-	_ "github.com/willmtemple/graphc/graphdriver/aufs"
-	_ "github.com/willmtemple/graphc/graphdriver/btrfs"
-	_ "github.com/willmtemple/graphc/graphdriver/devmapper"
-	_ "github.com/willmtemple/graphc/graphdriver/overlay"
 	_ "github.com/willmtemple/graphc/graphdriver/vfs"
-	_ "github.com/willmtemple/graphc/graphdriver/windows"
-	_ "github.com/willmtemple/graphc/graphdriver/zfs"
 )
 
 func initDriver(c *cli.Context) graphdriver.Driver {
@@ -33,7 +27,15 @@ func create(c *cli.Context) {
 	id := c.Args().First()
 	if err := driver.Create(id, c.String("parent")); err != nil {
 		fmt.Printf("Failed to create %s: %s\n", id, err)
-		driver.Cleanup()
+		os.Exit(1)
+	}
+}
+
+func remove(c *cli.Context) {
+	driver := initDriver(c)
+	id := c.Args().First()
+	if err := driver.Remove(id); err != nil {
+		fmt.Printf("Failed to remove %s: %s\n", id, err)
 		os.Exit(1)
 	}
 }
@@ -44,7 +46,6 @@ func get(c *cli.Context) {
 	loc, err := driver.Get(id, c.GlobalString("context"))
 	if err != nil {
 		fmt.Printf("Failed to Get %s: %s\n", id, err)
-		driver.Cleanup()
 		os.Exit(1)
 	}
 	fmt.Printf("%s is available at %s\n", id, loc)
@@ -55,8 +56,14 @@ func put(c *cli.Context) {
 	id := c.Args().First()
 	if err := driver.Put(id); err != nil {
 		fmt.Printf("Failed to Put %s: %s\n", id, err)
-		driver.Cleanup()
 		os.Exit(1)
+	}
+}
+
+func clean(c *cli.Context) {
+	driver := initDriver(c)
+	if err := driver.Cleanup(); err != nil {
+		fmt.Printf("Failed to clean up: %s\n", err)
 	}
 }
 
@@ -100,6 +107,12 @@ func main() {
 			Action: create,
 		},
 		{
+			Name:    "remove",
+			Aliases: []string{"r"},
+			Usage:   "remove storage for id",
+			Action:  remove,
+		},
+		{
 			Name:    "get",
 			Aliases: []string{"g"},
 			Usage:   "mount an image to the filesystem",
@@ -110,6 +123,12 @@ func main() {
 			Aliases: []string{"p"},
 			Usage:   "unmount an image from the filesystem",
 			Action:  put,
+		},
+		{
+			Name:    "clean",
+			Aliases: []string{},
+			Usage:   "clean up stateful artifacts",
+			Action:  clean,
 		},
 	}
 
