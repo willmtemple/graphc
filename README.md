@@ -14,5 +14,6 @@ build`.
 The program has subcommands which are analogues of the public `Driver` API in
 Docker's `graphdriver`.
 
-This program is strictly a work-in-progress and can (and probably will) do
-everything up to and including eat your laundry.
+######Disclaimer:
+> *This program is strictly a work-in-progress and can (and probably will) do
+> everything up to and including eat your laundry.*
